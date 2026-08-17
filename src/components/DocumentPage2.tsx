@@ -71,6 +71,11 @@ export const DocumentPage2: React.FC<Props> = ({ data, onChange }) => {
     }
   };
 
+  const formatNum = (val: number | undefined | null) => {
+    if (val === undefined || val === null || val === 0) return '-';
+    return Number.isInteger(val) ? String(val) : String(Number(val.toFixed(2)));
+  };
+
   return (
     <div>
       {/* Screen View: Dark Neumorphism Form */}
@@ -127,14 +132,14 @@ export const DocumentPage2: React.FC<Props> = ({ data, onChange }) => {
               </div>
 
               {/* Single Data Row */}
-              <div className="flex gap-2 items-stretch text-sm my-2">
+              <div className="flex gap-2 items-start text-sm my-2">
                 {/* ที่ - Week No read only */}
-                <div className="w-12 flex items-center justify-center text-gray-300 font-semibold flex-shrink-0 neu-pressed rounded-xl border border-white/5 py-3 text-sm">
+                <div className="w-12 h-11 flex items-center justify-center text-gray-300 font-semibold flex-shrink-0 neu-pressed rounded-xl border border-white/5 text-sm">
                   {data.weekNo || '1'}
                 </div>
 
                 {/* งานที่ดำเนินการ - Multi-line auto-generate preview box (read-only) */}
-                <div className="flex-1 neu-pressed border border-white/5 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-gray-200 min-h-[72px] flex flex-col justify-center select-none cursor-default">
+                <div className="flex-1 neu-pressed border border-white/5 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-gray-200 min-h-[72px] flex flex-col justify-start select-none cursor-default">
                   {dailyDetailsList.length > 0 ? (
                     <div className="space-y-1.5 py-1">
                       {dailyDetailsList.map((item, idx) => {
@@ -150,55 +155,55 @@ export const DocumentPage2: React.FC<Props> = ({ data, onChange }) => {
                       })}
                     </div>
                   ) : (
-                    <span className="text-gray-500 italic text-xs">
+                    <span className="text-gray-500 italic text-xs py-2">
                       (ดึงข้อมูลจากบันทึกรายวันอัตโนมัติ — หากต้องการแก้ไขให้ระบุในตารางบันทึกรายวัน)
                     </span>
                   )}
                 </div>
 
                 {/* สัดส่วนของงาน% - Input */}
-                <div className="w-20 flex-shrink-0 flex items-center">
+                <div className="w-20 flex-shrink-0">
                   <input
                     type="number"
                     value={primaryTask.weightPercent || ''}
                     onChange={(e) => handleUpdatePrimaryTask('weightPercent', parseFloat(e.target.value) || 0)}
                     placeholder="100"
-                    className="w-full text-center neu-pressed border border-white/5 rounded-xl px-2 py-3 text-white font-semibold focus:outline-none focus:border-orange-500/50 transition-colors h-full"
+                    className="w-full h-11 text-center neu-pressed border border-white/5 rounded-xl px-2 text-white font-semibold focus:outline-none focus:border-orange-500/50 transition-colors"
                   />
                 </div>
 
                 {/* ผลงาน% 3 ช่อง */}
-                <div className="flex w-52 gap-1 flex-shrink-0 items-center">
+                <div className="flex w-52 gap-1 flex-shrink-0">
                   {/* ถึงสัปดาห์ก่อน - Read-only display */}
-                  <div className="flex-1 h-full text-center text-gray-400 font-semibold py-3 px-1 text-xs sm:text-sm flex items-center justify-center neu-pressed rounded-xl border border-white/5">
-                    {primaryTask.prevPercent > 0 ? primaryTask.prevPercent.toFixed(2) : '-'}
+                  <div className="flex-1 h-11 text-center text-gray-400 font-semibold px-1 text-xs sm:text-sm flex items-center justify-center neu-pressed rounded-xl border border-white/5">
+                    {formatNum(primaryTask.prevPercent)}
                   </div>
 
                   {/* ในสัปดาห์ - Input */}
-                  <div className="flex-1 h-full">
+                  <div className="flex-1">
                     <input
                       type="number"
                       value={primaryTask.thisWeekPercent || ''}
                       onChange={(e) => handleUpdatePrimaryTask('thisWeekPercent', parseFloat(e.target.value) || 0)}
                       placeholder="0"
-                      className="w-full h-full text-center neu-pressed border border-white/5 rounded-xl px-1 py-3 text-white font-semibold focus:outline-none focus:border-orange-500/50 transition-colors"
+                      className="w-full h-11 text-center neu-pressed border border-white/5 rounded-xl px-1 text-white font-semibold focus:outline-none focus:border-orange-500/50 transition-colors"
                     />
                   </div>
 
                   {/* สะสม - Read-only display */}
-                  <div className="flex-1 h-full text-center text-gray-400 font-semibold py-3 px-1 text-xs sm:text-sm flex items-center justify-center neu-pressed rounded-xl border border-white/5">
-                    {primaryTask.accumulatedPercent > 0 ? primaryTask.accumulatedPercent.toFixed(2) : '-'}
+                  <div className="flex-1 h-11 text-center text-gray-400 font-semibold px-1 text-xs sm:text-sm flex items-center justify-center neu-pressed rounded-xl border border-white/5">
+                    {formatNum(primaryTask.accumulatedPercent)}
                   </div>
                 </div>
 
                 {/* ผลงานรวม% - Input */}
-                <div className="w-20 flex-shrink-0 flex items-center">
+                <div className="w-20 flex-shrink-0">
                   <input
                     type="number"
                     value={primaryTask.totalPercent || ''}
                     onChange={(e) => handleUpdatePrimaryTask('totalPercent', parseFloat(e.target.value) || 0)}
                     placeholder="0"
-                    className="w-full text-center neu-pressed border border-white/5 rounded-xl px-2 py-3 text-white font-semibold focus:outline-none focus:border-orange-500/50 transition-colors h-full"
+                    className="w-full h-11 text-center neu-pressed border border-white/5 rounded-xl px-2 text-white font-semibold focus:outline-none focus:border-orange-500/50 transition-colors"
                   />
                 </div>
               </div>
@@ -208,13 +213,13 @@ export const DocumentPage2: React.FC<Props> = ({ data, onChange }) => {
                 <div className="w-12 flex-shrink-0"></div>
                 <div className="flex-1"></div>
                 <div className="w-20 text-center text-gray-300 font-bold neu-pressed py-2.5 rounded-xl border border-white/5 flex-shrink-0">
-                  {primaryTask.weightPercent > 0 ? primaryTask.weightPercent.toFixed(2) : '-'}
+                  {formatNum(primaryTask.weightPercent)}
                 </div>
                 <div className="w-52 text-center text-gray-300 font-bold neu-pressed py-2.5 rounded-xl border border-white/5 flex-shrink-0 tracking-wider">
                   รวม
                 </div>
                 <div className="w-20 text-center text-gray-300 font-bold neu-pressed py-2.5 rounded-xl border border-white/5 flex-shrink-0">
-                  {primaryTask.totalPercent > 0 ? primaryTask.totalPercent.toFixed(2) : '-'}
+                  {formatNum(primaryTask.totalPercent)}
                 </div>
               </div>
             </div>
@@ -265,26 +270,26 @@ export const DocumentPage2: React.FC<Props> = ({ data, onChange }) => {
               <tbody>
                 {/* 1 Main Weekly Task Row */}
                 <tr className="min-h-[44px]">
-                  <td className="border border-black p-2 align-middle font-bold">
+                  <td className="border border-black p-2 align-top font-bold">
                     {data.weekNo || '1'}
                   </td>
                   <td className="border border-black p-2 align-top text-left font-medium whitespace-pre-line leading-relaxed">
                     {autoGeneratedDescription || 'ไม่ปฏิบัติงาน'}
                   </td>
-                  <td className="border border-black p-2 align-middle font-medium">
-                    {primaryTask.weightPercent > 0 ? primaryTask.weightPercent.toFixed(2) : '-'}
+                  <td className="border border-black p-2 align-top font-medium">
+                    {formatNum(primaryTask.weightPercent)}
                   </td>
-                  <td className="border border-black p-2 align-middle font-medium">
-                    {primaryTask.prevPercent > 0 ? primaryTask.prevPercent.toFixed(2) : '-'}
+                  <td className="border border-black p-2 align-top font-medium">
+                    {formatNum(primaryTask.prevPercent)}
                   </td>
-                  <td className="border border-black p-2 align-middle font-medium">
-                    {primaryTask.thisWeekPercent > 0 ? primaryTask.thisWeekPercent.toFixed(2) : '-'}
+                  <td className="border border-black p-2 align-top font-medium">
+                    {formatNum(primaryTask.thisWeekPercent)}
                   </td>
-                  <td className="border border-black p-2 align-middle font-medium">
-                    {primaryTask.accumulatedPercent > 0 ? primaryTask.accumulatedPercent.toFixed(2) : '-'}
+                  <td className="border border-black p-2 align-top font-medium">
+                    {formatNum(primaryTask.accumulatedPercent)}
                   </td>
-                  <td className="border border-black p-2 align-middle font-medium">
-                    {primaryTask.totalPercent > 0 ? primaryTask.totalPercent.toFixed(2) : '-'}
+                  <td className="border border-black p-2 align-top font-medium">
+                    {formatNum(primaryTask.totalPercent)}
                   </td>
                 </tr>
 
@@ -293,13 +298,13 @@ export const DocumentPage2: React.FC<Props> = ({ data, onChange }) => {
                   <td className="border border-black p-2"></td>
                   <td className="border border-black p-2"></td>
                   <td className="border border-black p-2">
-                    {primaryTask.weightPercent > 0 ? primaryTask.weightPercent.toFixed(2) : '-'}
+                    {formatNum(primaryTask.weightPercent)}
                   </td>
                   <td colSpan={3} className="border border-black p-2 text-center font-bold">
                     รวม
                   </td>
                   <td className="border border-black p-2">
-                    {primaryTask.totalPercent > 0 ? primaryTask.totalPercent.toFixed(2) : '-'}
+                    {formatNum(primaryTask.totalPercent)}
                   </td>
                 </tr>
               </tbody>
