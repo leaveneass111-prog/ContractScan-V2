@@ -8,7 +8,7 @@ import { DocumentPage2 } from './components/DocumentPage2';
 import { DocumentPage3 } from './components/DocumentPage3';
 import { ExportView } from './components/ExportView';
 import { GeminiAssistantModal } from './components/GeminiAssistantModal';
-import { Sparkles, Wand2, UploadCloud, FileText } from 'lucide-react';
+import { UploadCloud, FileText } from 'lucide-react';
 
 const STORAGE_KEY = 'contractscan_projects_v2';
 
@@ -245,29 +245,6 @@ export default function App() {
 
         </div>
       </main>
-
-      {/* Compact Floating Icon Drop Button for Gemini AI */}
-      <div className="fixed bottom-6 right-6 z-40 print:hidden flex items-center gap-2">
-        <button
-          onClick={() => setIsGeminiOpen(true)}
-          className="group relative neu-purple-btn p-3.5 rounded-2xl shadow-[0_10px_25px_rgba(124,58,237,0.4)] text-white transition-all flex items-center gap-2 border border-purple-400/30 hover:scale-105 active:scale-95"
-          title="ขอความช่วยเหลือจาก Gemini AI"
-        >
-          <div className="relative flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-orange-400 animate-pulse" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-orange-400 animate-ping"></span>
-          </div>
-          <span className="text-xs font-bold tracking-wide transition-all hidden sm:inline-block">
-            Gemini AI
-          </span>
-          <div className="w-5 h-5 rounded-lg bg-white/10 flex items-center justify-center text-purple-200 group-hover:rotate-180 transition-transform duration-300">
-            <Wand2 className="w-3 h-3" />
-          </div>
-          <span className="absolute -top-10 right-0 bg-[#1e1e1e] text-purple-300 text-[11px] font-semibold px-3 py-1 rounded-xl shadow-xl border border-purple-500/30 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-            ✨ คลิกเพื่อใช้ Gemini AI ช่วยร่างเอกสาร
-          </span>
-        </button>
-      </div>
 
       {/* Gemini AI Assistant Modal */}
       <GeminiAssistantModal
